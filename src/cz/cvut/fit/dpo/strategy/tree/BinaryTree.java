@@ -7,7 +7,7 @@ public class BinaryTree<T extends Comparable<T>>{
 	private Node<T> root;
 
 	public BinaryTree() {
-		this(null);
+		this(new NullNode<T>());
 	}
 
 	public BinaryTree(Node<T> root) {
@@ -57,8 +57,11 @@ public class BinaryTree<T extends Comparable<T>>{
 	}
 
 	private Node<T> insert(Node<T> node, T value) {
-		if (node == null) {
-			return new Node<T>(value);
+		if (node instanceof NullNode<?>) {
+			Node<T> nnn = new NonNullNode<T>(value);
+			nnn.setLeft(new NullNode<T>());
+			nnn.setRight(new NullNode<T>());
+			return nnn;
 		} else {
 			if (value.compareTo(node.getValue()) < 0) {
 				node.setLeft(insert(node.getLeft(), value));
